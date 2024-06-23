@@ -146,7 +146,7 @@ namespace SysBot.ACNHOrders
             {
                 botname = "Order Bot";
             }
-            var batinfo = $"TITLE {botname}\n@echo off\n:Start\ncd {botloc}\n{botapp}\n:: Wait 20 seconds before restarting.\nTIMEOUT / T 20\nGOTO: Start";
+            var batinfo = $"TITLE {botname}\n@echo off\n:Start\ncd {botloc}\n{botapp}.exe\n:: Wait 20 seconds before restarting.\nTIMEOUT /T 20\nGOTO:Start";
             using (StreamWriter writer = new StreamWriter("Restart.bat"))
             {
                 writer.WriteLine($"{batinfo}");
