@@ -174,6 +174,28 @@ namespace SysBot.ACNHOrders
         [RequireSudo]
         public async Task RequestTurnipMaxSetAsync() => await RequestTurnipSetAsync(999999999);
 
+        [Command("offdock")]
+        [Summary("Tries to get bot off dock")]
+        [RequireSudo]
+        public async Task OffDockAsync()
+        {
+            SwitchStick s = SwitchStick.LEFT;
+            short lx = -30000;
+            short ux = 0;
+            short ly = 0;
+            short uy = 30000;
+            ushort lms = 1000;
+            ushort ums = Globals.Bot.Config.DodoModeConfig.UpFromAirport; //3000;
+            await ReplyAsync($"Hi {Context.User.Mention}, I will try to get off the dock.").ConfigureAwait(false);
+            var b = Globals.Bot;
+            await b.Connection.SendAsync(SwitchCommand.SetStick(s, lx, ly, b.UseCRLF), CancellationToken.None).ConfigureAwait(false);
+            await Task.Delay(lms).ConfigureAwait(false);
+            await b.Connection.SendAsync(SwitchCommand.ResetStick(s, b.UseCRLF), CancellationToken.None).ConfigureAwait(false);
+            await b.Connection.SendAsync(SwitchCommand.SetStick(s, ux, uy, b.UseCRLF), CancellationToken.None).ConfigureAwait(false);
+            await Task.Delay(ums).ConfigureAwait(false);
+            await b.Connection.SendAsync(SwitchCommand.ResetStick(s, b.UseCRLF), CancellationToken.None).ConfigureAwait(false);
+        }
+
         private async Task DropItems(IReadOnlyCollection<Item> items)
         {
             if (!await GetDropAvailability().ConfigureAwait(false))
