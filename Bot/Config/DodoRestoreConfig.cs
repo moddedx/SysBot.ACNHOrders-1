@@ -83,5 +83,8 @@ namespace SysBot.ACNHOrders
 
         /// <summary> If the above is set to true, how often should we cycle through them? </summary>
         public int CycleNHLMinutes { get; set; } = 1440;
+
+        /// <summary> How long to hold up to walk off airport dock? </summary>
+        public ushort UpFromAirport { get; set; } = 3000;
     }
 }
